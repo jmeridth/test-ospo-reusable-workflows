@@ -1,0 +1,17 @@
+## Reference: https://github.com/amannn/action-semantic-pull-request
+---
+name: "Lint PR Title"
+on:
+  pull_request_target:
+    types: [opened, reopened, edited, synchronize]
+permissions:
+  contents: read
+jobs:
+  main:
+    permissions:
+      contents: read
+      pull-requests: read
+      statuses: write
+    uses: github/ospo-reusable-workflows/.github/workflows/pr-title.yaml@1406afbf7a795f706f04644059cecbb3b2f0c1a0
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
