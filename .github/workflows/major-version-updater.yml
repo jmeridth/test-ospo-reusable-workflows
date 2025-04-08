@@ -1,0 +1,19 @@
+---
+name: Major Version Updater
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      TAG_NAME:
+        description: "Tag name that the major tag will point to (e.g. v1.2.3)"
+        required: true
+permissions:
+  contents: read
+jobs:
+  main:
+    permissions:
+      contents: write
+    uses: github/ospo-reusable-workflows/.github/workflows/major-version-updater.yaml@10cfc2f9be5fce5e90150dfbffc7c0f4e68108ab
+    with:
+      tag_name: ${{ github.event.inputs.TAG_NAME || github.ref}}
