@@ -9,7 +9,7 @@ permissions:
 jobs:
   main:
     permissions:
-      contents: read
+      contents: write
       pull-requests: write
     uses: github/ospo-reusable-workflows/.github/workflows/auto-labeler.yaml@6d41e9f4a53f6273e8f278888d0afeec142761b9
     with:
