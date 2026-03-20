@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: read
-    uses: github-community-projects/ospo-reusable-workflows/.github/workflows/release.yaml@26eec20abba5ae806698592c79628f6906da372c
+    uses: github-community-projects/ospo-reusable-workflows/.github/workflows/release.yaml@1360e492f68a14c8c3d06569a6c755ef896fc2f2
     with:
       publish: true
       release-config-name: release-drafter.yml
