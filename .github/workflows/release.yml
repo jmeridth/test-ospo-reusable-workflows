@@ -1,38 +1,18 @@
 ---
-name: Release
+name: "Release"
 on:
   workflow_dispatch:
   pull_request_target:
     types: [closed]
     branches: [main]
-permissions:
-  contents: read
 jobs:
   release:
     permissions:
       contents: write
       pull-requests: read
-    uses: github-community-projects/ospo-reusable-workflows/.github/workflows/release.yaml@6bc46d499c518406c22e58ac9b61a05c0b654985
+    uses: github-community-projects/ospo-reusable-workflows/.github/workflows/release.yaml@592067a69a43d2285f933753d89a7c9d51b96530 # v1.0.0
     with:
       publish: true
       release-config-name: release-drafter.yml
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
-  release_image:
-    needs: release
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-      attestations: write
-    uses: github-community-projects/ospo-reusable-workflows/.github/workflows/release-image.yaml@26eec20abba5ae806698592c79628f6906da372c
-    with:
-      image-name: ${{ github.repository }}
-      full-tag: ${{ needs.release.outputs.full-tag }}
-      short-tag: ${{ needs.release.outputs.short-tag }}
-      create-attestation: true
-    secrets:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
-      image-registry: ghcr.io
-      image-registry-username: ${{ github.actor }}
-      image-registry-password: ${{ secrets.GITHUB_TOKEN }}
