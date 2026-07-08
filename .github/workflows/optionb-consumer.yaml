@@ -13,7 +13,8 @@
 # validation ignores `if:` and hoists the requirement here anyway.
 name: "Option B - Consumer (minimal perms)"
 on:
-  workflow_dispatch:
+  push:
+    branches: [test/option-b-permission-validation]
 jobs:
   call:
     permissions:
