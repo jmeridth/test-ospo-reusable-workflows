@@ -1,0 +1,20 @@
+---
+# Control for the Option B test. IDENTICAL to optionb-consumer.yaml except it
+# grants the full elevated permission set. It calls the SAME orchestrator whose
+# optional_image nested call is still `if: false`.
+#
+# If this run passes startup while the minimal-perms consumer fails, the only
+# variable is the permission grant — proving the failure is parse-time
+# nested-permission validation, not a YAML/syntax error.
+name: "Option B - Consumer (full perms control)"
+on:
+  push:
+    branches: [test/option-b-permission-validation]
+jobs:
+  call:
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    uses: ./.github/workflows/optionb-orchestrator.yaml
