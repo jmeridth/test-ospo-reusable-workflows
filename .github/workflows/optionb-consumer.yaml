@@ -1,0 +1,21 @@
+---
+# Option B test harness — see issue github-community-projects/ospo-reusable-workflows#149
+#
+# This consumer grants ONLY `contents: read`. It calls an orchestrator whose
+# only elevated-permission work lives in a SEPARATE reusable workflow, invoked
+# via a `uses:` job gated by `if: false`.
+#
+# Option B hypothesis: because the elevated job is a conditionally-skipped
+# nested reusable-workflow CALL (not a plain job with a permissions block),
+# GitHub will NOT force this consumer to grant packages/id-token/attestations.
+#
+# Expected per research: STARTUP FAILURE — parse-time nested-permission
+# validation ignores `if:` and hoists the requirement here anyway.
+name: "Option B - Consumer (minimal perms)"
+on:
+  workflow_dispatch:
+jobs:
+  call:
+    permissions:
+      contents: read
+    uses: ./.github/workflows/optionb-orchestrator.yaml

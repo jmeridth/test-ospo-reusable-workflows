@@ -1,0 +1,26 @@
+---
+# Option B orchestrator — models a slimmed release.yaml where the optional,
+# high-permission feature (e.g. release_image) is factored out into its own
+# reusable workflow and called conditionally.
+name: "Option B - Orchestrator"
+on:
+  workflow_call:
+jobs:
+  base:
+    # Always runs. Represents the core draft/tag work — needs only contents.
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - run: echo "base job runs — core release path"
+
+  optional_image:
+    # The Option B move: an OPTIONAL feature as a nested reusable-workflow call,
+    # gated off. If Option B worked, its permission needs would not reach the
+    # top-level consumer because this call is skipped.
+    if: ${{ false }}
+    permissions:
+      packages: write
+      id-token: write
+      attestations: write
+    uses: ./.github/workflows/optionb-nested.yaml

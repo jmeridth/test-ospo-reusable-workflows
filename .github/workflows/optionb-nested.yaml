@@ -1,0 +1,16 @@
+---
+# Option B nested workflow — the high-permission optional feature, isolated.
+# Its job declares the elevated scopes that release_image / release_goreleaser
+# need in the real workflow.
+name: "Option B - Nested (elevated perms)"
+on:
+  workflow_call:
+jobs:
+  needs_elevated:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      id-token: write
+      attestations: write
+    steps:
+      - run: echo "nested job — would push image / attest"
